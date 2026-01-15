@@ -116,6 +116,7 @@ import { resolve } from 'path';
 export default defineConfig({
   base: '/Practice-Promises-Date-flatpickr-notiflix/',
 
+  // Если многостраничный сайт
   build: {
     rollupOptions: {
       input: {
@@ -128,9 +129,6 @@ export default defineConfig({
   },
 });
 ```
-
-> Пока **не используем base**, чтобы GitHub Pages правильно раздавал сайт из
-> корня ветки gh-pages.
 
 ---
 
