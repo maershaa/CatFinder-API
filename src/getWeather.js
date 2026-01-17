@@ -1,7 +1,7 @@
 // https://www.weatherapi.com/ -  Weather API
 
 const WEATHER_API_KEY = '11847d1f4edf4f85a8584116261501';
-const WEATHER_BASE_URL = 'http://api.weatherapi.com/v1';
+const WEATHER_BASE_URL = 'https://api.weatherapi.com/v1';
 
 async function getWeather() {
   const response = await fetch(
