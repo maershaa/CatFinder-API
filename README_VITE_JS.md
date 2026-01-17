@@ -144,7 +144,7 @@ npm install --save-dev gh-pages
 
 ```json
 "scripts": {
-  "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist"
 }
 ```
 
@@ -187,9 +187,6 @@ npm run deploy
 - **main** — исходники проекта + vite.config.js + npm-библиотеки.
 - **gh-pages** — только готовая сборка (dist).
 
-Да, точно! Ты правильно поняла. Вот **корректный пошаговый алгоритм для внесения
-изменений после того, как проект уже настроен с main и gh-pages**:
-
 ---
 
 ## Алгоритм внесения изменений и обновления сайта
@@ -213,7 +210,7 @@ git add .
 
 git commit -m "feat: описание изменений"
 
-git push origin main
+git push
 
 ```
 

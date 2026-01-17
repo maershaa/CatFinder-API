@@ -10,15 +10,50 @@
 
 <body>
   <div id="app">
+    <!-- SIDEBAR -->
+    <aside class="weather-sideBar weather-sideBar-js "> </aside>
 
-    <select class="breed-select"></select>
-    <p class="loader">Loading data, please wait...</p>
-    <p class="error">Oops! Something went wrong! Try reloading the page!</p>
-    <div class="cat-info"></div>
+    <!-- MAIN CONTENT -->
+    <main class="content content-js">
 
-
+      <select class="breed-select breed-select-js"></select>
+      <p class="loader">Loading data, please wait...</p>
+      <p class="error">Oops! Something went wrong! Try reloading the page!</p>
+      <article class="cat-card cat-card-js"></article>
+    </main>
   </div>
+
+  <aside class="movie-sideBar movie-js">
+    <!-- Мини-квадратик квиза -->
+    <div class="movie-widget movie-widget-js">
+      <p class="movie-widget__label">🎬 Actor Quiz</p>
+      <button class="movie-widget__button movie-widget-btn-js">Press to find out!</button>
+    </div>
+
+    <!-- Модалка с рандомным актером -->
+    <div class="movie-modal movie-modal-js">
+    </div>
+  </aside>
+
+
+  <footer class="footer">
+    <p>
+      Weather data by <a href="https://www.weatherapi.com/" target="_blank" rel="noopener">WeatherAPI</a> |
+      Movie & character data by <a href="https://www.themoviedb.org/" target="_blank" rel="noopener">TMDB</a> |
+      Cat images by <a href="https://thecatapi.com/" target="_blank" rel="noopener">The Cat API</a>
+    </p>
+  </footer>
+
+
+
+
+
+
+
+
   <script type="module" src="/src/main.js"></script>
 </body>
+
+
 
 </html>
