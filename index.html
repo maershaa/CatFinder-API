@@ -6,22 +6,29 @@
   <link rel="icon" type="image/svg+xml" href="/CatFinder-API/vite.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>cat-finder</title>
-  <script type="module" crossorigin src="/CatFinder-API/assets/index-BL5J9_dJ.js"></script>
-  <link rel="stylesheet" crossorigin href="/CatFinder-API/assets/index-DP-iCUQt.css">
+  <script type="module" crossorigin src="/CatFinder-API/assets/index-yPxAIzEq.js"></script>
+  <link rel="stylesheet" crossorigin href="/CatFinder-API/assets/index-CDt0WrA0.css">
 </head>
 
 <body>
   <div id="app">
+    <div class="page-loader hidden">
+      <div class="loader"></div>
+    </div>
     <!-- SIDEBAR -->
     <aside class="weather-sideBar weather-sideBar-js "> </aside>
 
     <!-- MAIN CONTENT -->
     <main class="content content-js">
 
-      <select class="breed-select breed-select-js"></select>
-      <p class="loader">Loading data, please wait...</p>
-      <p class="error">Oops! Something went wrong! Try reloading the page!</p>
-      <article class="cat-card cat-card-js"></article>
+      <select name="radio" class="breed-select breed-select-js"></select>
+
+
+      <article class="cat-card cat-card-js">
+        <div class="section-loader hidden">
+          <div class="loader"></div>
+        </div>
+      </article>
     </main>
   </div>
 
