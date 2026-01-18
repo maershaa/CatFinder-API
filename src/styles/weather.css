@@ -1,0 +1,90 @@
+/* Контейнер сайдбара */
+.weather-sideBar {
+  position: sticky;
+  top: 0;
+
+  min-height: 100vh;
+
+  padding: 24px 20px;
+
+  background: linear-gradient(180deg, #f0f4f8 0%, #d9e2ec 100%);
+
+  border-right: 2px solid #cbd6e2;
+  border-radius: 0 12px 12px 0;
+
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.05);
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.04);
+
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #1e293b;
+}
+
+@media (max-width: 768px) {
+  .weather-sideBar {
+    position: static;
+    width: 100%;
+    min-height: auto;
+  }
+}
+
+/* Верх */
+.weather__header {
+  margin-bottom: 28px;
+}
+
+.weather__location {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: 6px;
+}
+
+.weather__time {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+/* Центральный блок */
+.weather__main {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  margin-bottom: 28px;
+}
+
+.weather__icon {
+  width: 56px;
+  height: 56px;
+}
+
+.weather__condition {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+/* Температура */
+.weather__temp {
+  padding: 16px;
+  border-radius: 14px;
+
+  background: #ffffff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.weather__value {
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.weather__feels {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.weather__feels span {
+  font-weight: 500;
+  color: #111827;
+}

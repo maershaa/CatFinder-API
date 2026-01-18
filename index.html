@@ -10,16 +10,23 @@
 
 <body>
   <div id="app">
+    <div class="page-loader hidden">
+      <div class="loader"></div>
+    </div>
     <!-- SIDEBAR -->
     <aside class="weather-sideBar weather-sideBar-js "> </aside>
 
     <!-- MAIN CONTENT -->
     <main class="content content-js">
 
-      <select class="breed-select breed-select-js"></select>
-      <p class="loader">Loading data, please wait...</p>
-      <p class="error">Oops! Something went wrong! Try reloading the page!</p>
-      <article class="cat-card cat-card-js"></article>
+      <select name="radio" class="breed-select breed-select-js"></select>
+
+
+      <article class="cat-card cat-card-js">
+        <div class="section-loader hidden">
+          <div class="loader"></div>
+        </div>
+      </article>
     </main>
   </div>
 

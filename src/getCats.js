@@ -1,45 +1,21 @@
-const CAT_API_KEY =
-  'live_kpBCAEiYDNSXr8p6TyrL3iCarAqaBZrYB8A97aRdBRuqNXPj9oRMvv6QdeqN0sqC';
-const CAT_API_BASE_URL = 'https://api.thecatapi.com/v1';
+import { CAT_API_BASE_URL, CAT_API_KEY } from './api/config.js';
 
 const createCatSelectMarkup = arr => {
   return arr
-    .map(
-      cat => `<option value=${cat.id} data-id=${cat.id}> ${cat.name} </option>`
-    )
+    .map(cat => `<option value=${cat.id} > ${cat.name} </option>`)
     .join('');
 };
 
-async function getCats() {
-  const response = await fetch(
-    `${CAT_API_BASE_URL}/breeds?api_key=${CAT_API_KEY}`
-  );
-  if (!response.ok) {
-    throw new Error(response.statusText);
-  }
-  return response.json();
-}
+// async function getPhotoByBreed(breedId) {
+//   const response = await fetch(
+//     `${CAT_API_BASE_URL}/images/search?breed_ids=${breedId}&api_key=${CAT_API_KEY}`
+//   );
+//   if (!response.ok) {
+//     throw new Error((await response).status);
+//   }
 
-async function getCatByBreed(breedId) {
-  const response = await fetch(
-    `${CAT_API_BASE_URL}/breeds/${breedId}?api_key=${CAT_API_KEY}`
-  );
-  if (!response.ok) {
-    throw new Error(response.statusText);
-  }
-  return response.json();
-}
-
-async function getPhotoByBreed(breedId) {
-  const response = await fetch(
-    `${CAT_API_BASE_URL}/images/search?breed_ids=${breedId}&api_key=${CAT_API_KEY}`
-  );
-  if (!response.ok) {
-    throw new Error((await response).status);
-  }
-
-  return response.json();
-}
+//   return response.json();
+// }
 
 const createCatCardMarkup = (
   {
@@ -57,7 +33,7 @@ const createCatCardMarkup = (
     intelligence,
     social_needs,
   },
-  img
+  url
 ) => {
   return `
   <h2 class="cat-name">${name}</h2>
@@ -67,7 +43,7 @@ const createCatCardMarkup = (
     <section class="cat-main">
       <img
         class="cat-image"
-         src="${img[0].url}" 
+         src="${url}" 
         alt="${name}"
         loading="lazy"
       />
@@ -135,7 +111,6 @@ const createCatCardMarkup = (
       </dl>
     </section>
   </div>
-</article>
 `;
 };
 
@@ -143,10 +118,4 @@ function colorredDots() {
   // добавлять стиль тому количеству точек которое соответствует amount
   return;
 }
-export {
-  createCatSelectMarkup,
-  getCats,
-  getCatByBreed,
-  createCatCardMarkup,
-  getPhotoByBreed,
-};
+export { createCatSelectMarkup, createCatCardMarkup };

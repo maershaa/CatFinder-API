@@ -3,92 +3,109 @@
 // https://thecatapi.com/ - The Cat API
 
 import './style.css';
+import './components/Loader/Loader.css';
+
+import UxSelect from 'ux-select/dist/js/ux-select.es.js';
+import 'ux-select/dist/css/ux-select.css';
+
 import { getWeather, createWeatherMarkup } from './getWeather.js';
 import { getActorForQuiz, createWidgetModal } from './getRandomActor.js';
-import {
-  createCatSelectMarkup,
-  getCats,
-  createCatCardMarkup,
-  getCatByBreed,
-  getPhotoByBreed,
-} from './getCats.js';
+import { createCatSelectMarkup, createCatCardMarkup } from './getCats.js';
+import { fetchBreeds, fetchCatByBreed } from './api/cat-api.js';
 
-const selectEl = document.querySelector('.breed-select-js');
-const catInfoEl = document.querySelector('.cat-card-js');
+import { refs } from './utils/refs.js';
+import { showToast } from './utils/showToast.js';
 
-// ===================== Погода
-const weatherSideBarEl = document.querySelector('.weather-sideBar-js');
+const {
+  pageLoader,
+  sectionLoader,
+  selectEl,
+  catInfoEl,
+  weatherSideBarEl,
+  movieWidget,
+  movieModal,
+} = refs;
 
-const movieWidget = document.querySelector('.movie-widget-js');
-const movieModal = document.querySelector('.movie-modal');
+function showPageLoader() {
+  pageLoader.classList.remove('hidden');
+  movieWidget.classList.add('is-loading');
+}
 
-// Коты
-async function renderCatsSelect() {
+function hidePageLoader() {
+  pageLoader.classList.add('hidden');
+  movieWidget.classList.remove('is-loading');
+}
+
+function showCatLoader() {
+  sectionLoader.classList.remove('hidden');
+  catInfoEl.classList.add('is-loading');
+}
+
+function hideCatLoader() {
+  sectionLoader.classList.add('hidden');
+  catInfoEl.classList.remove('is-loading');
+}
+
+async function initApp() {
+  showPageLoader();
   try {
-    const catsData = await getCats();
-    const catSelectMarkup = createCatSelectMarkup(catsData);
-    selectEl.insertAdjacentHTML('beforeend', catSelectMarkup);
+    const [catsBreeds, weather] = await Promise.all([
+      fetchBreeds(),
+      getWeather(),
+    ]);
+
+    selectEl.innerHTML = createCatSelectMarkup(catsBreeds); //!!!почему не insertAdjacentHTML?
+    weatherSideBarEl.innerHTML = createWeatherMarkup(weather); //!!!почему не insertAdjacentHTML?
+
+    new UxSelect(selectEl, {
+      optionStyle: 'radio',
+      hideOnSelect: true, //скрыть после выбора опции
+    });
   } catch (error) {
-    console.error('Ошибка загрузки породы:', error);
+    showToast(`Initialization error: ${error.message}`);
+  } finally {
+    hidePageLoader();
   }
 }
-renderCatsSelect();
 
-selectEl.addEventListener('input', onInput);
+initApp();
 
-async function onInput(evt) {
+selectEl.addEventListener('change', onChangeSelect);
+
+async function onChangeSelect(evt) {
   catInfoEl.innerHTML = '';
   const selectedBreedId = evt.target.value;
-  // console.log('🚀 ~ onInput ~ selectedBreedId:', selectedBreedId);
+  if (!selectedBreedId) return;
   renderCatsInfo(selectedBreedId);
 }
 
 async function renderCatsInfo(id) {
   try {
-    const catImg = await getPhotoByBreed(id);
-    const catData = await getCatByBreed(id);
-
-    catInfoEl.style.display = 'block';
-    const catMarkup = createCatCardMarkup(catData, catImg);
-    return catInfoEl.insertAdjacentHTML('beforeend', catMarkup);
+    showCatLoader();
+    const data = await fetchCatByBreed(id);
+    const cat = data[0].breeds[0];
+    const catImg = data[0].url;
+    if (!cat) throw new Error('No cat data');
+    const catMarkup = createCatCardMarkup(cat, catImg);
+    catInfoEl.insertAdjacentHTML('beforeend', catMarkup);
   } catch (error) {
-    console.error(
-      'Ошибка загрузки информации о породе или загрузки изображения:',
-      error
-    );
+    showToast(`Error loading breed information:${error.message}`);
+    console.error('Ошибка загрузки информации о породе:', error.message);
+  } finally {
+    hideCatLoader();
   }
 }
-
-// function createDots(value, max = 5) {
-//   return Array.from({ length: max }, (_, i) => {
-//     const isActive = i < value;
-//     return `<span class="dot ${isActive ? 'dot--active' : ''}"></span>`;
-//   }).join('');
-// }
-
-// ============
-async function renderWeather() {
-  try {
-    const dataWeather = await getWeather();
-    const weatherMarkup = createWeatherMarkup(dataWeather);
-    weatherSideBarEl.insertAdjacentHTML('beforeend', weatherMarkup);
-  } catch (error) {
-    console.error('Ошибка загрузки погоды:', error);
-  }
-}
-
-renderWeather();
 
 // Actor Quiz виджет
 
 movieWidget.addEventListener('click', async () => {
   try {
     const actor = await getActorForQuiz();
-
     movieModal.innerHTML = createWidgetModal(actor);
     movieModal.style.display = 'block';
   } catch (error) {
-    console.error('Ошибка загрузки виджета:', error);
+    showToast(`Error loading widget: ${error.message}`);
+    console.error('Ошибка загрузки виджета:', error.message);
   }
 });
 
@@ -98,3 +115,42 @@ movieModal.addEventListener('click', evt => {
     movieModal.style.display = 'none';
   }
 });
+
+// function createDots(value, max = 5) {
+//   return Array.from({ length: max }, (_, i) => {
+//     const isActive = i < value;
+//     return `<span class="dot ${isActive ? 'dot--active' : ''}"></span>`;
+//   }).join('');
+// }
+
+// !async function renderWeather() {
+//   try {
+//     const dataWeather = await getWeather();
+//     const weatherMarkup = createWeatherMarkup(dataWeather);
+
+//     weatherSideBarEl.insertAdjacentHTML('beforeend', weatherMarkup);
+//   } catch (error) {
+//     showToast(`Error loading weather: ${error.message}`);
+
+//     console.error('Ошибка загрузки погоды:', error.message);
+//   }
+// }
+
+// !renderWeather();
+
+// Коты
+//! async function renderCatsSelect() {
+//   try {
+//     const catsData = await fetchBreeds();
+//     const catSelectMarkup = createCatSelectMarkup(catsData);
+//     selectEl.insertAdjacentHTML('beforeend', catSelectMarkup);
+//     new UxSelect(selectEl, {
+//       optionStyle: 'radio',
+//       hideOnSelect: true, //скрыть после выбора опции
+//     });
+//   } catch (error) {
+//     showToast(`Error loading breed: ${error.message}`);
+//     console.error('Ошибка загрузки породы:', error.message);
+//   }
+// }
+// !renderCatsSelect();

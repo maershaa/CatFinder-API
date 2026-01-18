@@ -1,0 +1,57 @@
+/* =========== LOADER =========== */
+.hidden {
+  display: none !important;
+}
+.page-loader {
+  position: fixed;
+  inset: 0;
+  background-color: #ffffffcc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+/* !!!! и что с этим делать??? */
+.cat-card {
+  position: relative;
+  min-height: 200px;
+}
+
+.section-loader {
+  position: absolute;
+  inset: 0;
+  background-color: #ffffffcc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader {
+  width: 16px;
+  height: 16px;
+
+  border-radius: 50%;
+  background-color: #4a90e2;
+  box-shadow: 32px 0 #7bb8f5, -32px 0 #7bb8f5;
+  position: relative;
+  animation: flash 0.5s ease-out infinite alternate;
+}
+@keyframes flash {
+  0% {
+    background-color: #4a90e2aa; /* прозрачный синий */
+    box-shadow: 32px 0 #7bb8f5aa, -32px 0 #4a90e2aa;
+  }
+  50% {
+    background-color: #4a90e2; /* насыщенный синий */
+    box-shadow: 32px 0 #7bb8f5aa, -32px 0 #7bb8f5aa;
+  }
+  100% {
+    background-color: #4a90e2aa;
+    box-shadow: 32px 0 #4a90e2aa, -32px 0 #7bb8f5aa;
+  }
+}
+
+.is-loading {
+  pointer-events: none;
+  opacity: 0.5;
+}
