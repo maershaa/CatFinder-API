@@ -1,18 +1,5 @@
 // https://www.weatherapi.com/ -  Weather API
 
-const WEATHER_API_KEY = '11847d1f4edf4f85a8584116261501';
-const WEATHER_BASE_URL = 'https://api.weatherapi.com/v1';
-
-async function getWeather() {
-  const response = await fetch(
-    `${WEATHER_BASE_URL}/current.json?key=${WEATHER_API_KEY}&q=auto:ip`
-  );
-  if (!response.ok) {
-    throw new Error(response.status);
-  }
-  return response.json();
-}
-
 const createWeatherMarkup = weatherData => {
   const { location, current } = weatherData;
   return `  
@@ -39,4 +26,4 @@ const createWeatherMarkup = weatherData => {
   </div>`;
 };
 
-export { createWeatherMarkup, getWeather };
+export { createWeatherMarkup };

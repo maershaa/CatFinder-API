@@ -1,22 +1,3 @@
-import { CAT_API_BASE_URL, CAT_API_KEY } from './api/config.js';
-
-const createCatSelectMarkup = arr => {
-  return arr
-    .map(cat => `<option value=${cat.id} > ${cat.name} </option>`)
-    .join('');
-};
-
-// async function getPhotoByBreed(breedId) {
-//   const response = await fetch(
-//     `${CAT_API_BASE_URL}/images/search?breed_ids=${breedId}&api_key=${CAT_API_KEY}`
-//   );
-//   if (!response.ok) {
-//     throw new Error((await response).status);
-//   }
-
-//   return response.json();
-// }
-
 const createCatCardMarkup = (
   {
     name,
@@ -36,7 +17,7 @@ const createCatCardMarkup = (
   url
 ) => {
   return `
-  <h2 class="cat-name">${name}</h2>
+<h2 class="cat-name">${name}</h2>
 
   <div class="cat-content">
     <!-- Левая колонка -->
@@ -111,11 +92,9 @@ const createCatCardMarkup = (
       </dl>
     </section>
   </div>
+
+
 `;
 };
 
-function colorredDots() {
-  // добавлять стиль тому количеству точек которое соответствует amount
-  return;
-}
-export { createCatSelectMarkup, createCatCardMarkup };
+export { createCatCardMarkup };

@@ -2,6 +2,7 @@
 .hidden {
   display: none !important;
 }
+
 .page-loader {
   position: fixed;
   inset: 0;
@@ -11,19 +12,15 @@
   justify-content: center;
   z-index: 1000;
 }
-/* !!!! и что с этим делать??? */
-.cat-card {
-  position: relative;
-  min-height: 200px;
-}
 
 .section-loader {
   position: absolute;
   inset: 0;
-  background-color: #ffffffcc;
+  background-color: rgba(255, 255, 255, 0.8);
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 10;
 }
 
 .loader {
@@ -32,22 +29,30 @@
 
   border-radius: 50%;
   background-color: #4a90e2;
-  box-shadow: 32px 0 #7bb8f5, -32px 0 #7bb8f5;
+  box-shadow:
+    32px 0 #7bb8f5,
+    -32px 0 #7bb8f5;
   position: relative;
   animation: flash 0.5s ease-out infinite alternate;
 }
 @keyframes flash {
   0% {
-    background-color: #4a90e2aa; /* прозрачный синий */
-    box-shadow: 32px 0 #7bb8f5aa, -32px 0 #4a90e2aa;
+    background-color: #4a90e2aa;
+    box-shadow:
+      32px 0 #7bb8f5aa,
+      -32px 0 #4a90e2aa;
   }
   50% {
-    background-color: #4a90e2; /* насыщенный синий */
-    box-shadow: 32px 0 #7bb8f5aa, -32px 0 #7bb8f5aa;
+    background-color: #4a90e2;
+    box-shadow:
+      32px 0 #7bb8f5aa,
+      -32px 0 #7bb8f5aa;
   }
   100% {
     background-color: #4a90e2aa;
-    box-shadow: 32px 0 #4a90e2aa, -32px 0 #7bb8f5aa;
+    box-shadow:
+      32px 0 #4a90e2aa,
+      -32px 0 #7bb8f5aa;
   }
 }
 

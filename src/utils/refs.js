@@ -3,7 +3,7 @@ export const refs = {
   sectionLoader: document.querySelector('.section-loader'),
 
   selectEl: document.querySelector('.breed-select-js'),
-  catInfoEl: document.querySelector('.cat-card-js'),
+  catInfoEl: document.querySelector('.cat-wrapper-js'),
 
   weatherSideBarEl: document.querySelector('.weather-sideBar-js'),
 

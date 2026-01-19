@@ -8,11 +8,15 @@ import './components/Loader/Loader.css';
 import UxSelect from 'ux-select/dist/js/ux-select.es.js';
 import 'ux-select/dist/css/ux-select.css';
 
-import { getWeather, createWeatherMarkup } from './getWeather.js';
-import { getActorForQuiz, createWidgetModal } from './getRandomActor.js';
-import { createCatSelectMarkup, createCatCardMarkup } from './getCats.js';
+import { createWeatherMarkup } from './templates/weatherTemplate.js';
+import { createCatSelectMarkup } from './templates/catSelectTemplate';
+import { createCatCardMarkup } from './templates/catCardTemplate.js';
+import { createWidgetModal } from './templates/widgetTemplate.js';
+
+import { getWeather } from './api/weather-api.js';
 import { fetchBreeds, fetchCatByBreed } from './api/cat-api.js';
 
+import { getActorForQuiz } from './components/ActorWidget/ActorWidget.js';
 import { refs } from './utils/refs.js';
 import { showToast } from './utils/showToast.js';
 
@@ -37,11 +41,13 @@ function hidePageLoader() {
 }
 
 function showCatLoader() {
+  console.log('showCatLoader called');
   sectionLoader.classList.remove('hidden');
   catInfoEl.classList.add('is-loading');
 }
 
 function hideCatLoader() {
+  console.log('hideCatLoader called');
   sectionLoader.classList.add('hidden');
   catInfoEl.classList.remove('is-loading');
 }
