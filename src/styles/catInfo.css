@@ -101,7 +101,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 6px 10px;
+  padding: 10px 10px;
   background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
@@ -117,10 +117,17 @@
   color: #222;
 }
 
-dd {
-  margin: 0;
-  font-weight: 600;
-  color: #0077cc;
+.dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-right: 4px;
+  border-radius: 50%;
+  background-color: #ebe6e5;
+}
+
+.dot-colored {
+  background-color: #0077cc;
 }
 
 @media (max-width: 768px) {

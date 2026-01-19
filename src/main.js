@@ -15,45 +15,29 @@ import { createWidgetModal } from './templates/widgetTemplate.js';
 
 import { getWeather } from './api/weather-api.js';
 import { fetchBreeds, fetchCatByBreed } from './api/cat-api.js';
+import { fetchActorInfo, fetchFilmsByActor } from './api/movie-api.js';
 
 import { getActorForQuiz } from './components/ActorWidget/ActorWidget.js';
+
 import { refs } from './utils/refs.js';
+import {
+  showPageLoader,
+  hidePageLoader,
+  showCatLoader,
+  hideCatLoader,
+  showCatCard,
+  hideCatCard,
+  showMovieModal,
+  hideMovieModal,
+} from './utils/heplers.js';
+
 import { showToast } from './utils/showToast.js';
 
-const {
-  pageLoader,
-  sectionLoader,
-  selectEl,
-  catInfoEl,
-  weatherSideBarEl,
-  movieWidget,
-  movieModal,
-} = refs;
-
-function showPageLoader() {
-  pageLoader.classList.remove('hidden');
-  movieWidget.classList.add('is-loading');
-}
-
-function hidePageLoader() {
-  pageLoader.classList.add('hidden');
-  movieWidget.classList.remove('is-loading');
-}
-
-function showCatLoader() {
-  console.log('showCatLoader called');
-  sectionLoader.classList.remove('hidden');
-  catInfoEl.classList.add('is-loading');
-}
-
-function hideCatLoader() {
-  console.log('hideCatLoader called');
-  sectionLoader.classList.add('hidden');
-  catInfoEl.classList.remove('is-loading');
-}
+const { selectEl, catInfoEl, weatherSideBarEl, movieWidget, movieModal } = refs;
 
 async function initApp() {
   showPageLoader();
+
   try {
     const [catsBreeds, weather] = await Promise.all([
       fetchBreeds(),
@@ -71,6 +55,7 @@ async function initApp() {
     showToast(`Initialization error: ${error.message}`);
   } finally {
     hidePageLoader();
+    hideCatCard();
   }
 }
 
@@ -87,6 +72,7 @@ async function onChangeSelect(evt) {
 
 async function renderCatsInfo(id) {
   try {
+    showCatCard();
     showCatLoader();
     const data = await fetchCatByBreed(id);
     const cat = data[0].breeds[0];
@@ -102,13 +88,13 @@ async function renderCatsInfo(id) {
   }
 }
 
-// Actor Quiz виджет
-
 movieWidget.addEventListener('click', async () => {
   try {
     const actor = await getActorForQuiz();
-    movieModal.innerHTML = createWidgetModal(actor);
-    movieModal.style.display = 'block';
+    const actorInfo = await fetchActorInfo(actor.id);
+    const actorFilms = await fetchFilmsByActor(actor.id);
+    movieModal.innerHTML = createWidgetModal(actorInfo, actorFilms);
+    showMovieModal();
   } catch (error) {
     showToast(`Error loading widget: ${error.message}`);
     console.error('Ошибка загрузки виджета:', error.message);
@@ -117,46 +103,10 @@ movieWidget.addEventListener('click', async () => {
 
 // --- Делегирование клика по модалке для закрытия ---
 movieModal.addEventListener('click', evt => {
-  if (evt.target.classList.contains('movie-modal__close')) {
-    movieModal.style.display = 'none';
+  if (
+    evt.target.classList.contains('movie-modal__close') ||
+    evt.target === movieModal
+  ) {
+    hideMovieModal();
   }
 });
-
-// function createDots(value, max = 5) {
-//   return Array.from({ length: max }, (_, i) => {
-//     const isActive = i < value;
-//     return `<span class="dot ${isActive ? 'dot--active' : ''}"></span>`;
-//   }).join('');
-// }
-
-// !async function renderWeather() {
-//   try {
-//     const dataWeather = await getWeather();
-//     const weatherMarkup = createWeatherMarkup(dataWeather);
-
-//     weatherSideBarEl.insertAdjacentHTML('beforeend', weatherMarkup);
-//   } catch (error) {
-//     showToast(`Error loading weather: ${error.message}`);
-
-//     console.error('Ошибка загрузки погоды:', error.message);
-//   }
-// }
-
-// !renderWeather();
-
-// Коты
-//! async function renderCatsSelect() {
-//   try {
-//     const catsData = await fetchBreeds();
-//     const catSelectMarkup = createCatSelectMarkup(catsData);
-//     selectEl.insertAdjacentHTML('beforeend', catSelectMarkup);
-//     new UxSelect(selectEl, {
-//       optionStyle: 'radio',
-//       hideOnSelect: true, //скрыть после выбора опции
-//     });
-//   } catch (error) {
-//     showToast(`Error loading breed: ${error.message}`);
-//     console.error('Ошибка загрузки породы:', error.message);
-//   }
-// }
-// !renderCatsSelect();

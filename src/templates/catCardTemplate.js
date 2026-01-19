@@ -1,3 +1,5 @@
+import { createDots } from '../components/CatFinder/CatFinder.js';
+
 const createCatCardMarkup = (
   {
     name,
@@ -47,47 +49,47 @@ const createCatCardMarkup = (
       <dl class="traits-list">
         <div class="trait">
           <dt class="trait-text">Adaptability</dt>
-          <dd>${adaptability}</dd>
+          <dd>${createDots(adaptability)}</dd>
         </div>
 
         <div class="trait">
           <dt class="trait-text">Affection level</dt>
-          <dd>${affection_level}</dd>
+          <dd>${createDots(affection_level)}</dd>
         </div>
 
         <div class="trait">
           <dt class="trait-text">Good with children</dt>
-          <dd>${child_friendly}</dd>
+          <dd>${createDots(child_friendly)}</dd>
         </div>
 
         <div class="trait">
           <dt class="trait-text">Good with dogs</dt>
-          <dd>${dog_friendly}</dd>
+          <dd>${createDots(dog_friendly)}</dd>
         </div>
 
         <div class="trait">
           <dt class="trait-text">Energy level</dt>
-          <dd>${energy_level}</dd>
+          <dd>${createDots(energy_level)}</dd>
         </div>
 
         <div class="trait">
           <dt class="trait-text">Health issues</dt>
-          <dd>${health_issues}</dd>
+          <dd>${createDots(health_issues)}</dd>
         </div>
 
         <div class="trait">
           <dt class="trait-text">Shedding</dt>
-          <dd>${shedding_level}</dd>
+          <dd>${createDots(shedding_level)}</dd>
         </div>
 
         <div class="trait">
           <dt class="trait-text">Intelligence</dt>
-          <dd>${intelligence}</dd>
+          <dd>${createDots(intelligence)} </dd>
         </div>
 
         <div class="trait">
           <dt class="trait-text">Social needs</dt>
-          <dd>${social_needs}</dd>
+          <dd>${createDots(social_needs)}</dd>
         </div>
       </dl>
     </section>
